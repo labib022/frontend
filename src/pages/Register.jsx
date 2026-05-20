@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import API_URL from "../config"
 
 export default function Register() {
   const [name, setName] = useState("")
@@ -9,20 +10,20 @@ export default function Register() {
   const [error, setError] = useState("")
   const navigate = useNavigate()
 
-  const handleRegister = async (e) => {
-    e.preventDefault()
-    setError("")
-    try {
-      await axios.post("http://localhost:3000/auth/register", {
-        name,
-        email,
-        password,
-      })
-      navigate("/login")
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong!")
-    }
+ const handleRegister = async (e) => {
+  e.preventDefault()
+  setError("")
+  try {
+    await axios.post(`${API_URL}/auth/register`, {  
+      name,
+      email,
+      password,
+    })
+    navigate("/login")
+  } catch (err) {
+    setError(err.response?.data?.message || "Something went wrong!")
   }
+}
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">

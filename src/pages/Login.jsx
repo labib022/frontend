@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import API_URL from "../config"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -8,20 +9,20 @@ export default function Login() {
   const [error, setError] = useState("")
   const navigate = useNavigate()
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    setError("")
-    try {
-      const res = await axios.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      })
-      localStorage.setItem("token", res.data.token)
-      navigate("/users")
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong!")
-    }
+ const handleLogin = async (e) => {
+  e.preventDefault()
+  setError("")
+  try {
+    const res = await axios.post(`${API_URL}/auth/login`, {  
+      email,
+      password,
+    })
+    localStorage.setItem("token", res.data.token)
+    navigate("/users")
+  } catch (err) {
+    setError(err.response?.data?.message || "Something went wrong!")
   }
+}
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
